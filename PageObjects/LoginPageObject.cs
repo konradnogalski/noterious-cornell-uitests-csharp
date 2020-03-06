@@ -1,5 +1,5 @@
-﻿using Infrastructure;
-using Infrastructure.PageElements;
+﻿using Infrastructure.PageObject.PageElements;
+using Infrastructure.PageObject;
 using OpenQA.Selenium;
 
 namespace PageObjects
@@ -14,14 +14,18 @@ namespace PageObjects
         private string _loginButtonDisplayName = "Login";
         private string _loginButtonCssSelector = "button";
         private string _googleloginButtonDisplayName = "Google";
-        private string _googleLoginButtonACssSelector = "a[href='/auth/google']";
+        private string _googleLoginButtonCssSelector = "a[href='/auth/google']";
         private string _registerLinkDisplayName = "Click here to create one";
         private string _registerLinkCssSelector = "a[href='/register']";
-        public TextField UserName => new TextField(By.Id(_usernameFieldId), _usernameFieldDisplayName);
-        public TextField Password => new TextField(By.Id(_passwordFieldId), _passwordFieldDisplayName);
-        public Button LoginButton => new Button(By.CssSelector(_loginButtonCssSelector), _loginButtonDisplayName);
-        public Button GoogleLogin => new Button(By.CssSelector(_googleLoginButtonACssSelector), _googleloginButtonDisplayName);
-        public Button RegisterLink => new Button(By.CssSelector(_registerLinkCssSelector), _registerLinkDisplayName);
+
+        public LoginPageObject(IWebDriver driver) : base(driver)
+        {
+        }
         public override string Url => _loginPageUrl;
+        public TextField UserName => new TextField(() => FindElement(By.Id(_usernameFieldId)), _usernameFieldDisplayName);
+        public TextField Password => new TextField(() => FindElement(By.Id(_passwordFieldId)), _passwordFieldDisplayName);
+        public Button LoginButton => new Button(() => FindElement(By.CssSelector(_loginButtonCssSelector)), _loginButtonDisplayName);
+        public Button GoogleLogin => new Button(() => FindElement(By.CssSelector(_googleLoginButtonCssSelector)), _googleloginButtonDisplayName);
+        public Button RegisterLink => new Button(() => FindElement(By.CssSelector(_registerLinkCssSelector)), _registerLinkDisplayName);
     }
 }
