@@ -1,6 +1,7 @@
 namespace Infrastructure.PageObject.PageElements.Interfaces 
 {
-  public interface IClickable{
+  public interface IClickable
+  {
     void Click();
   }
 }

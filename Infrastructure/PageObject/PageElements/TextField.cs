@@ -1,13 +1,13 @@
 using System;
 using OpenQA.Selenium;
-using Infrastructure.PageObject.PageElements.Interfaces;
 
 namespace Infrastructure.PageObject.PageElements{
-    public class TextField : PageElement, ISetable
+    public class TextField : PageElement, IHasInputField
     {
-        public TextField(Func<IWebElement> webElement, string displayName) : base(webElement, displayName)
+        public TextField(IWebElement webElement) : base(webElement)
         {
         }
+        public string Label => ((WebElement)WebElement)?.Parent?.FindElement(By.CssSelector($"label[for='{Id}']"))?.Text;
 
         public string Value => WebElement?.GetAttribute("value");
 

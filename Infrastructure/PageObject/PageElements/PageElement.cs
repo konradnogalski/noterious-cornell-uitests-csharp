@@ -4,13 +4,12 @@ using OpenQA.Selenium;
 namespace Infrastructure.PageObject.PageElements{
     public abstract class PageElement
     {
-        private Func<IWebElement> _webElementFinder;
-        protected IWebElement WebElement => _webElementFinder.Invoke();
-        public string DisplayName {get; private set;}
-        protected PageElement(Func<IWebElement> webElementFinder, string displayName)
+        protected readonly IWebElement WebElement;
+        public PageElement(IWebElement webElement)
         {
-            _webElementFinder = webElementFinder;
-            DisplayName = displayName;
+            WebElement = webElement;
         }
+
+        public string Id => WebElement.GetAttribute("id");
     }
 }

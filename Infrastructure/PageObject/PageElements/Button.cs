@@ -5,7 +5,7 @@ using Infrastructure.PageObject.PageElements.Interfaces;
 namespace Infrastructure.PageObject.PageElements{
     public class Button : PageElement, IClickable
     {
-        public Button(Func<IWebElement> webElementFinder, string displayName) : base(webElementFinder, displayName)
+        public Button(IWebElement webElement) : base(webElement)
         {
         }
         public void Click()

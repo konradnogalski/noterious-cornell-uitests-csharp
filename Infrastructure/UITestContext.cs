@@ -6,7 +6,7 @@ namespace Infrastructure
 {
     public class UITestContext
     {
-        private string ScreenshotsDirectory = "Screenshots";
+        private readonly string ScreenshotsDirectory = "Screenshots";
         public IWebDriver Driver {get; private set;}
         public UITestContext(IWebDriver driver)
         {
