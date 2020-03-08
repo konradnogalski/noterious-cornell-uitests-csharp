@@ -24,7 +24,7 @@ namespace Infrastructure.FluentTestSteps
         }
 
         public PageFluentAsserts Field(TextField textField, Constraint constraint){
-            Assert.That(textField.Value, constraint, $"Incorrect value in field {textField.DisplayName}");
+            Assert.That(textField.Value, constraint, $"Incorrect value in '{textField.DisplayName}' field.");
 
             return this;
         }

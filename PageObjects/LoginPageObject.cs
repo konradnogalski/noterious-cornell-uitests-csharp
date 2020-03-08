@@ -25,7 +25,7 @@ namespace PageObjects
         public TextField UserName => new TextField(() => FindElement(By.Id(_usernameFieldId)), _usernameFieldDisplayName);
         public TextField Password => new TextField(() => FindElement(By.Id(_passwordFieldId)), _passwordFieldDisplayName);
         public Button LoginButton => new Button(() => FindElement(By.CssSelector(_loginButtonCssSelector)), _loginButtonDisplayName);
-        public Button GoogleLogin => new Button(() => FindElement(By.CssSelector(_googleLoginButtonCssSelector)), _googleloginButtonDisplayName);
+        public Button GoogleLoginButton => new Button(() => FindElement(By.CssSelector(_googleLoginButtonCssSelector)), _googleloginButtonDisplayName);
         public Button RegisterLink => new Button(() => FindElement(By.CssSelector(_registerLinkCssSelector)), _registerLinkDisplayName);
     }
 }

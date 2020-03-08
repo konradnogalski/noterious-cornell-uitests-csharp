@@ -9,7 +9,7 @@ namespace Infrastructure.PageObject.PageElements{
         {
         }
 
-        public string Value => WebElement.Text;
+        public string Value => WebElement?.GetAttribute("value");
 
         public void Set(string value)
         {
