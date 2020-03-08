@@ -18,27 +18,11 @@ namespace Infrastructure.PageObject.PageElements
             _elementLocator = elementLocator ?? throw new ArgumentNullException(nameof(elementLocator));
         }
 
-        public IWebElement Element
+        private IWebElement Element
         {
             get
             {
-                try
-                {
-                    return StalableElement;
-                }
-                catch (StaleElementReferenceException)
-                {
-                    return StalableElement;
-                }
-            }
-           
-        }
-
-        private IWebElement StalableElement
-        {
-            get
-            {
-                if (_stalableElement == null)
+                if (_stalableElement == null || IsStale)
                 {
                     _stalableElement = Parent.FindElement(_elementLocator);
                 }
@@ -46,6 +30,29 @@ namespace Infrastructure.PageObject.PageElements
                 return _stalableElement;
             }
         }
+
+        public bool IsStale
+        {
+            get 
+            {
+                try
+                {
+                    if (_stalableElement == null)
+                    {
+                        return false;
+                    }
+                    
+                    var _ = _stalableElement.TagName;
+                    return false;
+                }
+                catch (StaleElementReferenceException)
+                {
+                    return true;
+                }
+            }
+        }
+
+        public bool IsCached => _stalableElement != null;
 
         public string TagName => Element.TagName;
 
