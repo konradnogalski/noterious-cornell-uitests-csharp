@@ -8,16 +8,16 @@ namespace Infrastructure
 {
     public class UITestContext : IDisposable
     {
-        private readonly ScreenshotTaker _screenshotTaker;
+        private ScreenshotTaker _screenshotTaker;
 
-        public UITestContext(string screenshotsDirectory)
+        public UITestContext()
         {
-            _screenshotTaker = new ScreenshotTaker((ITakesScreenshot)Driver, screenshotsDirectory);
         }
 
-        public void Initialize()
+        public void Initialize(string screenshotsDirectory)
         {
             Driver = new ChromeDriver();
+            _screenshotTaker = new ScreenshotTaker((ITakesScreenshot)Driver, screenshotsDirectory);
         }
 
         public IWebDriver Driver { get; private set; }

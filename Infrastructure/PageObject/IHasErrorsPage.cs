@@ -1,11 +1,10 @@
-﻿using System;
+﻿using OpenQA.Selenium;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Infrastructure.PageObject
 {
     public interface IHasErrorsPage
     {
-        bool HasErrors();
+        List<string> Errors { get; }
     }
 }

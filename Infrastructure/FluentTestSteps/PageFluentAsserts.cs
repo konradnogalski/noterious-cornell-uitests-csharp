@@ -18,8 +18,25 @@ namespace Infrastructure.FluentTestSteps
             return this;
         }
 
-        public PageFluentAsserts ErrorMessageWasDisplayed(){
-            Assert.That(((IHasErrorsPage)_pageObject)?.HasErrors(), Is.True, "No error message was displayed");
+
+        public PageFluentAsserts HasErrors()
+        {
+            var pageErrors = ((IHasErrorsPage)_pageObject)?.Errors;
+            Assert.That(pageErrors.Count, Is.GreaterThan(0), "No errors are displayed");
+
+            return this;
+        }
+
+        public PageFluentAsserts HasNoErrors()
+        {
+            var pageErrors = ((IHasErrorsPage)_pageObject)?.Errors;
+            Assert.That(pageErrors.Count, Is.EqualTo(0), "Errors are displayed");
+
+            return this;
+        }
+
+        public PageFluentAsserts ErrorsContains(string errorMessage){
+            Assert.That(((IHasErrorsPage)_pageObject)?.Errors, Contains.Item(errorMessage), $"'{errorMessage}' was not displayed");
 
             return this;
         }

@@ -41,10 +41,10 @@ namespace Tests
             ClickSmokeTest((p) => p.RegisterLink);
         }
 
-        private void SetTextFieldSmokeTest(Func<LoginPageObject, TextField> textFieldSpecifier, string value)
+        private void SetTextFieldSmokeTest(Func<LoginPage, TextField> textFieldSpecifier, string value)
         {
             TestSteps.
-                GoTo<LoginPageObject>((p, a) =>
+                GoTo<LoginPage>((p, a) =>
                 {
                     var textField = textFieldSpecifier.Invoke(p);
                     a.Set(textFieldSpecifier.Invoke(p), value)
@@ -53,10 +53,10 @@ namespace Tests
                 });
         }
 
-        private void ClickSmokeTest(Func<LoginPageObject, IClickable> buttonSpecifier)
+        private void ClickSmokeTest(Func<LoginPage, IClickable> buttonSpecifier)
         {
             TestSteps.
-                GoTo<LoginPageObject>((p, a) => a
+                GoTo<LoginPage>((p, a) => a
                     .Click(buttonSpecifier(p)));
         }
     }

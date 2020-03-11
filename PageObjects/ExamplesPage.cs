@@ -15,7 +15,6 @@ namespace PageObjects
             SecondChild = new WebElement(Form, By.CssSelector(".child:nth-child(2)"));
             SecondChild = new WebElement(Form, By.CssSelector(".child:last-child"));
         }
-
         public WebElement Form { get; private set; }
         public WebElement FirstInputElement { get; private set; }
         public WebElement SecondChild { get; private set; }

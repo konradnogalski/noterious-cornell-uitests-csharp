@@ -14,7 +14,7 @@ namespace Infrastructure
         {
 
             Configuration.Create();
-            _testContext = new UITestContext(Configuration.ScreenshotsDirectory);
+            _testContext = new UITestContext();
             
             CreateScreenshotsDirectory();
         }
@@ -22,7 +22,7 @@ namespace Infrastructure
         [SetUp]
         public void Setup()
         {
-            _testContext.Initialize();
+            _testContext.Initialize(Configuration.ScreenshotsDirectory);
         }
 
         public FluentTestSteps.FluentTestSteps TestSteps => new FluentTestSteps.FluentTestSteps(_testContext);
