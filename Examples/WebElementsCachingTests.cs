@@ -5,12 +5,12 @@ using PageObjects;
 
 namespace Examples
 {
-    public class WebElementsCachingTests : BaseUITestTemplate
+    public class WebElementsCachingTests : TestFixtureBase
     {
         [Test]
         public void GivenNotCachedElement_WhenFirstCallToElementIsMade_ShouldCacheElement()
         {
-            TestSteps()
+            TestSteps
                 .GoTo<ExamplesPage>((page, a) =>
                 {
                     Assert.Multiple(() =>
@@ -28,7 +28,7 @@ namespace Examples
         [Test]
         public void GivenNotCachedParentAndChildElement_WhenFirstCallToChildElementIsMade_ShouldCacheBothElements()
         {
-            TestSteps()
+            TestSteps
                 .GoTo<ExamplesPage>((page, a) =>
                 {
                     Assert.Multiple(() =>

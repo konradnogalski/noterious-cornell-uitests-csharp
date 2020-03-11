@@ -1,45 +1,49 @@
 using System;
+using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
 
 namespace Infrastructure
 {
-    public class UITestContext
+    public class UITestContext : IDisposable
     {
-        private readonly string ScreenshotsDirectory = "Screenshots";
-        public IWebDriver Driver {get; private set;}
-        public UITestContext(IWebDriver driver)
+        private readonly ScreenshotTaker _screenshotTaker;
+
+        public UITestContext(string screenshotsDirectory)
         {
-            Driver = driver;
+            _screenshotTaker = new ScreenshotTaker((ITakesScreenshot)Driver, screenshotsDirectory);
         }
 
-        public void NavigateTo(string url)
+        public void Initialize()
         {
-            Driver.Navigate().GoToUrl(url);
+            Driver = new ChromeDriver();
         }
 
-        public void AwaitPageLoad()
+        public IWebDriver Driver { get; private set; }
+        
+        public void TakeScreenshot()
         {
-            ((IJavaScriptExecutor)Driver).ExecuteScript("return document.readyState").Equals("complete");
-        }
-
-        public void CleanUp()
-        {
-            if (IsTestFailed()){
-                TakeScreenShot();
-            }
-            
-            Driver.Quit();    
-        }
+            _screenshotTaker.TakeScreenshot($@"{TestContext.CurrentContext.Test.MethodName}_{DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss")}.png");
+        }  
 
         public bool IsTestFailed()
         {
             return TestContext.CurrentContext.Result.FailCount > 0;
         }
-        public void TakeScreenShot()
+
+        public void NavigateTo(string relativeUrl)
         {
-             var screenShot = ((ITakesScreenshot)Driver).GetScreenshot();
-            screenShot.SaveAsFile($@"{ScreenshotsDirectory}\Screenshot-{DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss")}.png");
+            Driver.Navigate().GoToUrl($"{Configuration.Settings.Protocol}://{Configuration.Settings.Host}/{relativeUrl}");
+        }
+
+        public void Dispose()
+        {
+            if (Driver != null)
+            {
+                Driver.Quit();
+                Driver = null;
+            }
         }
     }
 }

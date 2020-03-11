@@ -7,7 +7,7 @@ using Infrastructure.PageObject.PageElements.Interfaces;
 
 namespace Tests
 {
-    public class LoginPageSmokeTests : BaseUITestTemplate
+    public class LoginPageSmokeTests : TestFixtureBase
     {
         [Test]
         public void SetUserName()
@@ -43,7 +43,7 @@ namespace Tests
 
         private void SetTextFieldSmokeTest(Func<LoginPageObject, TextField> textFieldSpecifier, string value)
         {
-            TestSteps().
+            TestSteps.
                 GoTo<LoginPageObject>((p, a) =>
                 {
                     var textField = textFieldSpecifier.Invoke(p);
@@ -55,7 +55,7 @@ namespace Tests
 
         private void ClickSmokeTest(Func<LoginPageObject, IClickable> buttonSpecifier)
         {
-            TestSteps().
+            TestSteps.
                 GoTo<LoginPageObject>((p, a) => a
                     .Click(buttonSpecifier(p)));
         }

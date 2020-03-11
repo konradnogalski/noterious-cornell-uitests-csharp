@@ -10,11 +10,6 @@ namespace Infrastructure.PageObject
             Driver = driver;
         }
 
-        public abstract string Url {get; }
-
-        public bool HasErrors()
-        {
-            return Driver.FindElement(By.CssSelector(".is-invalid")) != null;
-        }
+        public abstract string RelativeUrl {get; }
     }
 }

@@ -4,7 +4,7 @@ using Infrastructure;
 
 namespace Tests
 {
-    public class Tests : BaseUITestTemplate
+    public class Tests : TestFixtureBase
     {
         [Test]
         public void GivenLoginForm_WhenUserNameIsWrong_DisplayErrorMessage()
@@ -14,14 +14,14 @@ namespace Tests
                 invalidPassword = "Invalid Password"
             };
 
-            TestSteps()
+            TestSteps
                 .GoTo<LoginPageObject>((p, a) => a
                 .Set(p.UserName, testData.invalidUsername)
                 .Set(p.Password, testData.invalidPassword)
                 .Click(p.LoginButton))
             .AwaitPageLoad<LoginPageObject>((p, a) => a
                 .Assert(that => that
-                    .PageUrl(Is.EqualTo(p.Url))
+                    .PageUrl(Is.EqualTo(p.RelativeUrl))
                     .ErrorMessageWasDisplayed()
                     .Field(p.UserName, Is.Empty)));
         }

@@ -6,14 +6,14 @@ using PageObjects;
 
 namespace Examples
 {
-    public class WebElementsStaleElementReferenceException : BaseUITestTemplate
+    public class WebElementsStaleElementReferenceExceptionTests : TestFixtureBase
     {
         [Test]
         public void GiventParentAndChildStaleElement_WhenFirstCallToThatElementIsMade_ShouldNotThrowStaleElementReferenceException()
         {
             WebElement soonToBeStaleParentElement = null;
             WebElement soonToBeStaleChildElement = null;
-            TestSteps()
+            TestSteps
                 .GoTo<ExamplesPage>((page, a) =>
                 {
                     soonToBeStaleParentElement = page.Form;
@@ -40,7 +40,7 @@ namespace Examples
         {
             WebElement soonToBeStaleParentElement = null;
             WebElement soonToBeStaleChildElement = null;
-            TestSteps()
+            TestSteps
                 .GoTo<ExamplesPage>((page, a) =>
                 {
                     soonToBeStaleParentElement = page.Form;

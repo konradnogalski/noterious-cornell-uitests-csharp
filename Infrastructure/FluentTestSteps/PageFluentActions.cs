@@ -3,26 +3,26 @@ using Infrastructure.PageObject.PageElements.Interfaces;
 
 namespace Infrastructure.FluentTestSteps
 {
-    public class FluentPageActions<TCurrentPageObject> where TCurrentPageObject : IPageObject
+    public class PageFluentActions<TCurrentPageObject> where TCurrentPageObject : IPageObject
     {
         private TCurrentPageObject _pageObject;
-        public FluentPageActions(TCurrentPageObject pageObject)
+        public PageFluentActions(TCurrentPageObject pageObject)
         {
             _pageObject = pageObject;
         }
 
-        public FluentPageActions<TCurrentPageObject> Assert(Action<PageFluentAsserts> fluentAsserts){
+        public PageFluentActions<TCurrentPageObject> Assert(Action<PageFluentAsserts> fluentAsserts){
             fluentAsserts.Invoke(new PageFluentAsserts(_pageObject));
 
             return this;
         }
-        public FluentPageActions<TCurrentPageObject> Set(ISetable setablePageElement, string value){
+        public PageFluentActions<TCurrentPageObject> Set(ISetable setablePageElement, string value){
             setablePageElement.Set(value);
 
             return this;
         }
 
-        public FluentPageActions<TCurrentPageObject> Click(IClickable clickablePageElement){
+        public PageFluentActions<TCurrentPageObject> Click(IClickable clickablePageElement){
             clickablePageElement.Click();
 
             return this;

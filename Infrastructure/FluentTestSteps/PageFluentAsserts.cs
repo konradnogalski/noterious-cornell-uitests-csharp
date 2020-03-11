@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using NUnit.Framework.Constraints;
 using Infrastructure.PageObject.PageElements;
+using Infrastructure.PageObject;
 
 namespace Infrastructure.FluentTestSteps
 {
@@ -12,13 +13,13 @@ namespace Infrastructure.FluentTestSteps
             _pageObject = pageobject;
         }
         public PageFluentAsserts PageUrl(Constraint constraint){
-            Assert.That(_pageObject.Url, constraint, "Incorrect page url");
+            Assert.That(_pageObject.RelativeUrl, constraint, "Incorrect page url");
 
             return this;
         }
 
         public PageFluentAsserts ErrorMessageWasDisplayed(){
-            Assert.That(_pageObject.HasErrors(), Is.True, "No error message was displayed");
+            Assert.That(((IHasErrorsPage)_pageObject)?.HasErrors(), Is.True, "No error message was displayed");
 
             return this;
         }

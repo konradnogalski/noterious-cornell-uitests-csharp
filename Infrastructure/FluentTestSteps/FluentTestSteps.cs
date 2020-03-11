@@ -2,14 +2,15 @@ using System;
 
 namespace Infrastructure.FluentTestSteps
 {
-    public class TestSteps
+    public class FluentTestSteps
     {
-        private UITestContext _uiTestContext;
-        public TestSteps(UITestContext uiTestContext)
+        private readonly UITestContext _uiTestContext;
+        public FluentTestSteps(UITestContext uiTestContext)
         {
             _uiTestContext = uiTestContext;
         }
-        public TestSteps GoTo<TCurrentPageObject>(Action<TCurrentPageObject, FluentPageActions<TCurrentPageObject>> pageActions)
+
+        public FluentTestSteps GoTo<TCurrentPageObject>(Action<TCurrentPageObject, PageFluentActions<TCurrentPageObject>> pageActions)
          where TCurrentPageObject : IPageObject
         {
             LoadPage(true, pageActions);
@@ -17,7 +18,7 @@ namespace Infrastructure.FluentTestSteps
             return this;
         }  
 
-        public TestSteps AwaitPageLoad<TCurrentPageObject>(Action<TCurrentPageObject, FluentPageActions<TCurrentPageObject>> pageActions)
+        public FluentTestSteps AwaitPageLoad<TCurrentPageObject>(Action<TCurrentPageObject, PageFluentActions<TCurrentPageObject>> pageActions)
          where TCurrentPageObject : IPageObject
         {
             LoadPage(false, pageActions);
@@ -25,17 +26,16 @@ namespace Infrastructure.FluentTestSteps
             return this;
         }
 
-        private TestSteps LoadPage<TCurrentPageObject>(bool shouldNavigatePage, Action<TCurrentPageObject, FluentPageActions<TCurrentPageObject>> pageActions, Action beforePageLoadAction = null)
+        private FluentTestSteps LoadPage<TCurrentPageObject>(bool shouldNavigatePage, Action<TCurrentPageObject, PageFluentActions<TCurrentPageObject>> pageActions, Action beforePageLoadAction = null)
          where TCurrentPageObject : IPageObject
         {
             var pageObject = CreatePageObject<TCurrentPageObject>();
             if (shouldNavigatePage)
             {
-                _uiTestContext.NavigateTo(pageObject.Url);
+                _uiTestContext.NavigateTo(pageObject.RelativeUrl);
             }
 
-            _uiTestContext.AwaitPageLoad();
-            pageActions.Invoke(pageObject, new FluentPageActions<TCurrentPageObject>(pageObject));
+            pageActions.Invoke(pageObject, new PageFluentActions<TCurrentPageObject>(pageObject));
 
             return this;
         }
