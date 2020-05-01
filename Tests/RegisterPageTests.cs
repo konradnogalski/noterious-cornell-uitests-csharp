@@ -15,7 +15,7 @@ namespace Tests
             TestSteps
                 .GoTo<RegistrationPage>((p, a) => a
                     .Click(p.RegisterButton)
-                    .Assert(that => that
+                    .Expect(that => that
                         .PageUrl(Is.EqualTo(p.RelativeUrl))));
         }
 
@@ -31,7 +31,7 @@ namespace Tests
                 .GoTo<RegistrationPage>((p, a) => a
                     .Set(p.UserName, CreateRandomUserName())
                     .Click(p.RegisterButton)
-                    .Assert(that => that
+                    .Expect(that => that
                         .PageUrl(Is.EqualTo(p.RelativeUrl))));
         }
 
@@ -50,7 +50,7 @@ namespace Tests
                     .Set(p.UserName, testData.Username)
                     .Set(p.Password, testData.Password)
                     .Click(p.RegisterButton)
-                    .Assert(that => that
+                    .Expect(that => that
                         .PageUrl(Is.EqualTo(p.RelativeUrl))
                         .HasErrors()
                         .ErrorsContains(testData.ExpectedErrorMassage)));
@@ -73,7 +73,7 @@ namespace Tests
                     .Set(p.Password, testData.Password)
                     .Set(p.ConfirmPassword, testData.ConfirmPassword)
                     .Click(p.RegisterButton)
-                    .Assert(that => that
+                    .Expect(that => that
                         .PageUrl(Is.EqualTo(p.RelativeUrl))
                         .HasErrors()
                         .ErrorsContains(testData.ExpectedErrorMassage)));
@@ -94,7 +94,7 @@ namespace Tests
                     .Set(p.UserName, testData.Username)
                     .Set(p.Password, testData.Password)
                     .Set(p.ConfirmPassword, testData.ConfirmPassword)
-                    .Assert(that => that
+                    .Expect(that => that
                         .PageUrl(Is.EqualTo(p.RelativeUrl))
                         .HasNoErrors()));
         }
@@ -118,7 +118,7 @@ namespace Tests
                     .Set(p.ConfirmPassword, testData.ConfirmPassword)
                     .Set(p.Password, testData.NewPassword)
                     .Click(p.RegisterButton)
-                    .Assert(that => that
+                    .Expect(that => that
                         .PageUrl(Is.EqualTo(p.RelativeUrl))
                         .HasErrors()
                         .ErrorsContains(testData.ExpectedErrorMassage)));
@@ -141,7 +141,7 @@ namespace Tests
                     .Set(p.ConfirmPassword, testData.ConfirmPassword)
                     .Click(p.RegisterButton))
                 .AwaitPageLoad<LoginPage>((p, a) => a
-                    .Assert(that => that
+                    .Expect(that => that
                         .PageUrl(Is.EqualTo(p.RelativeUrl))
                         .HasNoErrors()));
         }

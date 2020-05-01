@@ -8,9 +8,7 @@ namespace Infrastructure.PageObject.PageElements{
         {
         }
         public string DisplayedText => Parent?.FindElement(By.CssSelector($"label[for='{GetAttribute("Id")}']"))?.Text;
-
         public string Value => GetAttribute("value");
-
         public void Set(string value)
         {
             SendKeys(value);

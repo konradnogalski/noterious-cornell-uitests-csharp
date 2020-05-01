@@ -7,7 +7,7 @@ namespace Infrastructure.PageObject.PageElements
 {
     public class WebElement : IWebElement
     {
-        public readonly ISearchContext Parent;
+        protected readonly ISearchContext Parent;
         private readonly By _elementLocator;
         
         private IWebElement _stalableElement;

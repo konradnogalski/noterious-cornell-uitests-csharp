@@ -17,7 +17,6 @@ namespace PageObjects
             GoogleLoginButton = new Button(Driver, By.CssSelector(_googleLoginButtonCssSelector));
             RegisterLink = new Button(Driver, By.CssSelector(_registerLinkCssSelector));
         }
-
         public override string RelativeUrl => _loginPageUrl;
         public Button LoginButton { get; private set; }
         public Button GoogleLoginButton { get; private set; }

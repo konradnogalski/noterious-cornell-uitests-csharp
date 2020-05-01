@@ -12,6 +12,8 @@ namespace PageObjects
             SignedInUser = new Label(driver, _loggedUserLabelSelector);
         }
 
+        public Table NotesTable => new Table(Driver, By.CssSelector("table"));
+
         public Label SignedInUser { get; private set; }
 
         public override string RelativeUrl => "/home";

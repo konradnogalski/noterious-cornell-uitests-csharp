@@ -48,7 +48,7 @@ namespace Tests
                 {
                     var textField = textFieldSpecifier.Invoke(p);
                     a.Set(textFieldSpecifier.Invoke(p), value)
-                        .Assert(that => that
+                        .Expect(that => that
                             .Field(textFieldSpecifier.Invoke(p), Is.EqualTo(value)));
                 });
         }

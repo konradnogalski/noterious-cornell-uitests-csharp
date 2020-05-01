@@ -19,7 +19,6 @@ namespace PageObjects
         public WebElement FirstInputElement { get; private set; }
         public WebElement SecondChild { get; private set; }
         public WebElement ThirdChild { get; private set; }
-
         public override string RelativeUrl => _loginPageUrl;
     }
 }
