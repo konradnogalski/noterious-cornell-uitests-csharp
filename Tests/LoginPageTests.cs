@@ -25,5 +25,25 @@ namespace Tests
                     .HasErrors()
                     .Field(p.UserName, Is.Empty)));
         }
+
+        [Test]
+        public void GivenLoginForm_WhenUserLogsWithCorrectCredentials_UserIsLoggedIn()
+        {
+            var testData = new
+            {
+                validUsername = "silence_dogood",
+                validPassword = "franklin"
+            };
+
+            TestSteps
+                .GoTo<LoginPage>((p, a) => a
+                .Set(p.UserName, testData.validUsername)
+                .Set(p.Password, testData.validPassword)
+                .Click(p.LoginButton))
+            .AwaitPageLoad<MainPage>((p, a) => a
+                .Assert(that => that
+                    .PageUrl(Is.EqualTo(p.RelativeUrl))
+                    .LabelDisplayedText(p.SignedInUser.DisplayedText, Is.EqualTo(testData.validUsername))));
+        }
     }
 }

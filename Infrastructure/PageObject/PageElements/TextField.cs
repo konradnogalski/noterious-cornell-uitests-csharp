@@ -7,7 +7,7 @@ namespace Infrastructure.PageObject.PageElements{
         public TextField(ISearchContext parent, By cssSelector) : base(parent, cssSelector)
         {
         }
-        public string Label => Parent?.FindElement(By.CssSelector($"label[for='{GetAttribute("Id")}']"))?.Text;
+        public string DisplayedText => Parent?.FindElement(By.CssSelector($"label[for='{GetAttribute("Id")}']"))?.Text;
 
         public string Value => GetAttribute("value");
 

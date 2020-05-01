@@ -2,6 +2,6 @@
 {
     public interface IHasLabel
     {
-        string Label { get; }
+        string DisplayedText { get; }
     }
 }

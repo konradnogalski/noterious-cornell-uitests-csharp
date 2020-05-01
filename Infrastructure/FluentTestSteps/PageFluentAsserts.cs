@@ -42,7 +42,14 @@ namespace Infrastructure.FluentTestSteps
         }
 
         public PageFluentAsserts Field(IHasInputField textField, Constraint constraint){
-            Assert.That(textField.Value, constraint, $"Incorrect value in '{textField.Label}' field.");
+            Assert.That(textField.Value, constraint, $"Incorrect value in '{textField.DisplayedText}' field.");
+
+            return this;
+        }
+
+        public PageFluentAsserts LabelDisplayedText(string label, Constraint constraint)
+        {
+            Assert.That(label, constraint, $"Incorrect logged user.");
 
             return this;
         }
