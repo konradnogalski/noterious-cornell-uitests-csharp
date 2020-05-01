@@ -14,8 +14,8 @@ namespace PageObjects
 
         public UsernamePassowrdLoginPageObject(IWebDriver driver) : base(driver)
         {
-            UserName = new TextField(new WebElement(Driver, By.Id(_usernameFieldId)));
-            Password = new TextField(new WebElement(Driver, By.Id(_passwordFieldId)));
+            UserName = new TextField(Driver, By.Id(_usernameFieldId));
+            Password = new TextField(Driver, By.Id(_passwordFieldId));
         }
 
         public TextField UserName { get; private set; }

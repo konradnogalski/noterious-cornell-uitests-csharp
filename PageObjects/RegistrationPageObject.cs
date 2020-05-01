@@ -3,7 +3,6 @@ using OpenQA.Selenium;
 
 namespace PageObjects
 {
-
     public class RegistrationPage : UsernamePassowrdLoginPageObject
     {
         private string _registerPageUrl = "register";
@@ -12,8 +11,8 @@ namespace PageObjects
 
         public RegistrationPage(IWebDriver driver) : base(driver)
         {
-            RegisterButton = new Button(new WebElement(Driver, By.CssSelector(_registerButtonCssSelector)));
-            ConfirmPassword = new TextField(new WebElement(Driver, By.Id(_passwordConfirmationFieldId)));
+            RegisterButton = new Button(Driver, By.CssSelector(_registerButtonCssSelector));
+            ConfirmPassword = new TextField(Driver, By.Id(_passwordConfirmationFieldId));
         }
 
         public override string RelativeUrl => _registerPageUrl;

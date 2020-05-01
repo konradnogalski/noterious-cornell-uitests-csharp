@@ -3,14 +3,10 @@ using OpenQA.Selenium;
 using Infrastructure.PageObject.PageElements.Interfaces;
 
 namespace Infrastructure.PageObject.PageElements{
-    public class Button : PageElement, IClickable
+    public class Button : WebElement, IClickable
     {
-        public Button(IWebElement webElement) : base(webElement)
+        public Button(ISearchContext parent, By selector) : base(parent, selector)
         {
-        }
-        public void Click()
-        {
-            WebElement.Click();
         }
     }
 }

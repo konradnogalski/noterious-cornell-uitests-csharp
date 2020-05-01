@@ -2,18 +2,18 @@ using System;
 using OpenQA.Selenium;
 
 namespace Infrastructure.PageObject.PageElements{
-    public class TextField : PageElement, IHasInputField
+    public class TextField : WebElement, IHasInputField
     {
-        public TextField(IWebElement webElement) : base(webElement)
+        public TextField(ISearchContext parent, By cssSelector) : base(parent, cssSelector)
         {
         }
-        public string Label => ((WebElement)WebElement)?.Parent?.FindElement(By.CssSelector($"label[for='{Id}']"))?.Text;
+        public string Label => Parent?.FindElement(By.CssSelector($"label[for='{GetAttribute("Id")}']"))?.Text;
 
-        public string Value => WebElement?.GetAttribute("value");
+        public string Value => GetAttribute("value");
 
         public void Set(string value)
         {
-            WebElement.SendKeys(value);
+            SendKeys(value);
         }
     }
 }

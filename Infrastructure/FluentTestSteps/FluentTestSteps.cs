@@ -1,13 +1,14 @@
+using OpenQA.Selenium;
 using System;
 
 namespace Infrastructure.FluentTestSteps
 {
     public class FluentTestSteps
     {
-        private readonly UITestContext _uiTestContext;
-        public FluentTestSteps(UITestContext uiTestContext)
+        private readonly IWebDriver _driver;
+        public FluentTestSteps(IWebDriver driver)
         {
-            _uiTestContext = uiTestContext;
+            _driver = driver;
         }
 
         public FluentTestSteps GoTo<TCurrentPageObject>(Action<TCurrentPageObject, PageFluentActions<TCurrentPageObject>> pageActions)
@@ -26,13 +27,15 @@ namespace Infrastructure.FluentTestSteps
             return this;
         }
 
-        private FluentTestSteps LoadPage<TCurrentPageObject>(bool shouldNavigatePage, Action<TCurrentPageObject, PageFluentActions<TCurrentPageObject>> pageActions, Action beforePageLoadAction = null)
+        private FluentTestSteps LoadPage<TCurrentPageObject>(bool shouldNavigateToPage, Action<TCurrentPageObject, PageFluentActions<TCurrentPageObject>> pageActions, Action beforePageLoadAction = null)
          where TCurrentPageObject : IPageObject
         {
             var pageObject = CreatePageObject<TCurrentPageObject>();
-            if (shouldNavigatePage)
+            if (shouldNavigateToPage)
             {
-                _uiTestContext.NavigateTo(pageObject.RelativeUrl);
+                
+                _driver.Navigate().GoToUrl(
+                    $"{Configuration.Settings.Protocol}://{Configuration.Settings.Host}/{pageObject.RelativeUrl}");
             }
 
             pageActions.Invoke(pageObject, new PageFluentActions<TCurrentPageObject>(pageObject));
@@ -43,7 +46,7 @@ namespace Infrastructure.FluentTestSteps
         private TCurrentPageObject CreatePageObject<TCurrentPageObject>()
             where TCurrentPageObject : IPageObject
         {
-            return (TCurrentPageObject)Activator.CreateInstance(typeof(TCurrentPageObject), new[] { _uiTestContext.Driver });
+            return (TCurrentPageObject)Activator.CreateInstance(typeof(TCurrentPageObject), new[] { _driver });
         }      
     }
 }

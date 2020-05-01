@@ -16,8 +16,18 @@ namespace Infrastructure
                      .Build();
 
             Settings = new SettingsProvider(configuration);
+
+            CreateScreenshotsDirectory();
         }
 
         public static SettingsProvider Settings { get; private set; }
+
+        private static void CreateScreenshotsDirectory()
+        {
+            if (!Directory.Exists(Configuration.ScreenshotsDirectory))
+            {
+                Directory.CreateDirectory(Configuration.ScreenshotsDirectory);
+            }
+        }
     }
 }

@@ -13,9 +13,9 @@ namespace PageObjects
 
         public LoginPage(IWebDriver driver) : base(driver)
         {
-            LoginButton = new Button(new WebElement(Driver, By.CssSelector(_loginButtonCssSelector)));
-            GoogleLoginButton = new Button(new WebElement(Driver, By.CssSelector(_googleLoginButtonCssSelector)));
-            RegisterLink = new Button(new WebElement(Driver, By.CssSelector(_registerLinkCssSelector)));
+            LoginButton = new Button(Driver, By.CssSelector(_loginButtonCssSelector));
+            GoogleLoginButton = new Button(Driver, By.CssSelector(_googleLoginButtonCssSelector));
+            RegisterLink = new Button(Driver, By.CssSelector(_registerLinkCssSelector));
         }
 
         public override string RelativeUrl => _loginPageUrl;

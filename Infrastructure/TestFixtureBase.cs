@@ -1,31 +1,30 @@
 using NUnit.Framework;
+using OpenQA.Selenium.Chrome;
 using System;
-using System.IO;
 
 namespace Infrastructure
 {
      public class TestFixtureBase
      {
-
         private UITestContext _testContext;
+        private ScreenshotTaker _screenshotTaker;
 
         [OneTimeSetUp]
         public void OneTimeSetup()
         {
-
             Configuration.Create();
-            _testContext = new UITestContext();
-            
-            CreateScreenshotsDirectory();
         }
 
         [SetUp]
         public void Setup()
         {
-            _testContext.Initialize(Configuration.ScreenshotsDirectory);
+            var driver = new ChromeDriver();
+            _testContext = new UITestContext(driver);
+            _screenshotTaker = new ScreenshotTaker(driver, Configuration.ScreenshotsDirectory);
         }
 
-        public FluentTestSteps.FluentTestSteps TestSteps => new FluentTestSteps.FluentTestSteps(_testContext);
+        public FluentTestSteps.FluentTestSteps TestSteps => 
+            new FluentTestSteps.FluentTestSteps(_testContext.Driver);
 
         [TearDown]
         public void CleanUp()
@@ -34,13 +33,13 @@ namespace Infrastructure
             {
                 TestTearDownAdditionalSteps();
                 
-                if (!_testContext.IsTestFailed())
+                if (!IsTestFailed())
                 {
                     return;
                 }
 
-                _testContext.TakeScreenshot();
-
+                _screenshotTaker.TakeScreenshot(
+                    $@"{TestContext.CurrentContext.Test.MethodName}_{DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss")}.png");
             }
             catch (Exception e)
             {
@@ -57,12 +56,9 @@ namespace Infrastructure
 
         }
 
-        private void CreateScreenshotsDirectory()
+        private bool IsTestFailed()
         {
-            if (!Directory.Exists(Configuration.ScreenshotsDirectory))
-            {
-                Directory.CreateDirectory(Configuration.ScreenshotsDirectory);
-            }
+            return TestContext.CurrentContext.Result.FailCount > 0;
         }
     }
 }
