@@ -67,5 +67,28 @@ namespace Tests
                         .Expect(that => that
                             .ValueInColumn(2, Is.EqualTo(testData.firstRowTitle))))));
         }
+
+        [Test]
+        public void GivenMainPage_LastNoteIsLast()
+        {
+            var testData = new
+            {
+                validUsername = "silence_dogood",
+                validPassword = "franklin",
+                lastRowTitle = "Last",
+            };
+
+            TestSteps
+                .GoTo<LoginPage>((p, a) => a
+                .Set(p.UserName, testData.validUsername)
+                .Set(p.Password, testData.validPassword)
+                .Click(p.LoginButton))
+            .AwaitPageLoad<MainPage>((p, a) => a
+                .InTable(p.NotesTable, (t) => t
+                    .InRow(p.NotesTable.GetLastRow(), (r) => r
+                        .Expect(that => that
+                            .IsVisible()
+                            .ValueInColumn(2, Is.EqualTo(testData.lastRowTitle))))));
+        }
     }
 }

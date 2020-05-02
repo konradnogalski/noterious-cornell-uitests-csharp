@@ -15,7 +15,14 @@ namespace Infrastructure.PageObject.PageElements
 
         public Row GetFirstRow()
         {
-            return new Row(_rows.First());
+            var firstRow = _rows.FirstOrDefault();
+            return firstRow != null ? new Row(firstRow) : null;
+        }
+
+        public Row GetLastRow()
+        {
+            var lastRow = _rows.LastOrDefault();
+            return lastRow != null ? new Row(lastRow) : null;
         }
     }
 }

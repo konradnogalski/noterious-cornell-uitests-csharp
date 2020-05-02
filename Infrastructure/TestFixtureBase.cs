@@ -6,7 +6,6 @@ namespace Infrastructure
 {
      public class TestFixtureBase
      {
-        private UITestContext _testContext;
         private ScreenshotTaker _screenshotTaker;
 
         [OneTimeSetUp]
@@ -19,12 +18,12 @@ namespace Infrastructure
         public void Setup()
         {
             var driver = new ChromeDriver();
-            _testContext = new UITestContext(driver);
+            UITestContext.Create(driver);
             _screenshotTaker = new ScreenshotTaker(driver, Configuration.ScreenshotsDirectory);
         }
 
         public FluentTestSteps.FluentTestSteps TestSteps => 
-            new FluentTestSteps.FluentTestSteps(_testContext.Driver);
+            new FluentTestSteps.FluentTestSteps(UITestContext.Driver);
 
         [TearDown]
         public void CleanUp()
@@ -39,7 +38,7 @@ namespace Infrastructure
                 }
 
                 _screenshotTaker.TakeScreenshot(
-                    $@"{TestContext.CurrentContext.Test.MethodName}_{DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss")}.png");
+                    $@"{NUnit.Framework.TestContext.CurrentContext.Test.MethodName}_{DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss")}.png");
             }
             catch (Exception e)
             {
@@ -47,7 +46,7 @@ namespace Infrastructure
             } 
             finally
             {
-                _testContext.Dispose();
+                UITestContext.Dispose();
             }
         }
 
@@ -58,7 +57,7 @@ namespace Infrastructure
 
         private bool IsTestFailed()
         {
-            return TestContext.CurrentContext.Result.FailCount > 0;
+            return NUnit.Framework.TestContext.CurrentContext.Result.FailCount > 0;
         }
     }
 }

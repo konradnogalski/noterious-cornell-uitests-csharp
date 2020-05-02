@@ -14,6 +14,11 @@ namespace Infrastructure.FluentTestSteps
         public TableFluentActions<TCurrentTable> InRow<TCurrentRow>(TCurrentRow row, Action<RowActions<TCurrentRow>> rowActions)
         where TCurrentRow : Row
         {
+            if (!row.IsFullyInView)
+            {
+                row.scrollIntoView();
+            }
+            
             rowActions.Invoke(new RowActions<TCurrentRow>(row));
 
             return this;

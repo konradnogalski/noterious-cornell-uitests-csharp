@@ -18,16 +18,16 @@ namespace Examples
         [Test]
         public void PassedTest()
         {
-            Assert.That(TestContext.CurrentContext.Result.FailCount, Is.EqualTo(0), "Should keep context and have 0 failed asserts.");
+            Assert.That(NUnit.Framework.TestContext.CurrentContext.Result.FailCount, Is.EqualTo(0), "Should keep context and have 0 failed asserts.");
         }
 
         protected override void TestTearDownAdditionalSteps()
         {
-            var currentTestName = TestContext.CurrentContext.Test.MethodName;
+            var currentTestName = NUnit.Framework.TestContext.CurrentContext.Test.MethodName;
             var expectedFailCount = currentTestName == nameof(FailedTest) ? 1 : 0;
-            TestContext.WriteLine("TestMethod: " + currentTestName);
+            NUnit.Framework.TestContext.WriteLine("TestMethod: " + currentTestName);
 
-            Assert.That(TestContext.CurrentContext.Result.FailCount, Is.EqualTo(expectedFailCount), $"Should be {expectedFailCount} failed.");
+            Assert.That(NUnit.Framework.TestContext.CurrentContext.Result.FailCount, Is.EqualTo(expectedFailCount), $"Should be {expectedFailCount} failed.");
         }
     }
 }

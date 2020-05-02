@@ -10,6 +10,7 @@ namespace Infrastructure.FluentTestSteps
         public RowActions(Row row)
         {
             _row = row;
+
         }
 
         public RowActions<TCurrentRow> Expect(Action<RowAssertActions<TCurrentRow>> assertActions)

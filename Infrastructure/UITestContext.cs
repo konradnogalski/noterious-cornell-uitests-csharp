@@ -3,16 +3,14 @@ using OpenQA.Selenium;
 
 namespace Infrastructure
 {
-    public class UITestContext : IDisposable
+    public static class UITestContext
     {
-        public UITestContext(IWebDriver driver)
+        public static IWebDriver Driver { get; private set; }
+        public static void Create(IWebDriver driver)
         {
             Driver = driver;
         }
-
-        public IWebDriver Driver { get; private set; }       
-
-        public void Dispose()
+        public static void Dispose()
         {
             if (Driver != null)
             {

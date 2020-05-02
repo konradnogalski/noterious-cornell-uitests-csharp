@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Interactions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,33 @@ namespace Infrastructure.PageObject.PageElements
             }
 
             return _cells.ElementAt(columnIndex).Text;
+        }
+
+        public void scrollIntoView() 
+        {
+            var actions = new Actions(UITestContext.Driver);
+            actions.MoveToElement(_row);
+            actions.Build().Perform();
+        }
+
+        public bool IsVisible => _row.Displayed;
+        public bool IsFullyInView
+        {
+            get
+            {
+                var location = _row.Location;
+                var scriptRow = "return arguments[0].getBoundingClientRect().bottom + " +
+                    "arguments[0].scrollHeight";
+
+                var scriptViewPort = "return window.scrollY + window.innerHeight";
+
+                var rowBottomLocation =(Int64) ((IJavaScriptExecutor)UITestContext.Driver).ExecuteScript(scriptRow, _row);
+                var viewPortBottom = (Int64)((IJavaScriptExecutor)UITestContext.Driver).ExecuteScript(scriptViewPort);
+
+                var isRowWithingViewPortBounds = rowBottomLocation < viewPortBottom;
+
+                return isRowWithingViewPortBounds;
+            }
         }
     }
 }
