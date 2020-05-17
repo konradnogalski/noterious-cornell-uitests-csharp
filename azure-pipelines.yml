@@ -5,6 +5,10 @@
 
 trigger:
 - master
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'build'
+    projects: '**/*.csproj'
 
 pool:
   vmImage: 'ubuntu-latest'
