@@ -1,7 +1,7 @@
 using System;
 using PageObjects;
 using Infrastructure;
-
+using NUnit.Framework;
 using Infrastructure.PageObject.PageElements;
 using Infrastructure.PageObject.PageElements.Interfaces;
 
